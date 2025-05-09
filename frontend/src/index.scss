@@ -8,11 +8,16 @@
 
 body {
   width: 100%;
+  min-height: 100vh;
   font-family: "Roboto", sans-serif;
 }
 
 header.header, main.main, footer.footer {
   width: 100%;
+}
+
+main.main {
+  min-height: 70vh;
 }
 
 ul {

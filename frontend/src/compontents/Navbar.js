@@ -8,7 +8,8 @@ const Menubar = [
     {id: 2, name: "Giới thiệu" , link: "/introduction"},
     {id: 3, name: "Sản phẩm" , link: "/product"},
     {id: 4, name: "Câu hỏi thường gặp" , link: "/question"},
-    {id: 5, name: "Liên hệ" , link: "/contact"},
+    {id: 5, name: "Tuyển dụng" , link: "/recruitment"},
+    {id: 6, name: "Liên hệ" , link: "/contact"},
 ]
 
 function Navbar() {
