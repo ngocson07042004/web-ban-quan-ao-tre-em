@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { Home, Introduction, Product, Question, Recruitment, Contact } from '../pages-client'
-import { Header, Footer, MenuBottom } from '../compontents'
+import { Header, Footer, MenuBottom, Cart } from '../compontents'
+import './scss/ClientPage.scss'
 
 function ClientPage() {
     return (
@@ -18,6 +19,8 @@ function ClientPage() {
 
             <Footer/>
             <MenuBottom/>
+            <Cart/>
+            <div className="overlay" id="overlay"></div>
         </>
     )
 }

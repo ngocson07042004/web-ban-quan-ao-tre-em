@@ -6,7 +6,7 @@ function Contact() {
   document.title = "Liên hệ"
   
   return (
-    <main className="main" style={{ minHeight: "200vh" }}>
+    <main className="main" style={{ minHeight: "190vh" }}>
       <Container container={"container"}>
         <Row row={"row mt-2"}>
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
@@ -18,7 +18,7 @@ function Contact() {
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2 img-map"}>
-            <img src="./images/ban-do.jpg" className="img-fluid" alt="Map" />
+            <img src="./images/ban-do.jpg" className="img-fluid rounded" alt="Map" />
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
@@ -76,11 +76,11 @@ function Contact() {
               </Column>
             </Row>
           </Column>
-
+          
           <Column sm={12} md={6} lg={6} xl={6} xxl={6}>
-            <form>
+            <form className="form-contact">
               <Row row={"row input-form"}>
-                <Column col={6}>
+                <Column col={12}>
                   <label htmlFor="fullname-contact" className="form-label">Họ và tên *:</label><br/>
                   <input 
                     className="bg-body-secondary p-3" 
@@ -90,7 +90,7 @@ function Contact() {
                   />
                 </Column>
 
-                <Column col={6}>
+                <Column col={12}>
                   <label htmlFor="email-contact" className="form-label">Email *:</label><br/>
                   <input 
                     className="bg-body-secondary" 

@@ -1,0 +1,20 @@
+.container-product-list {
+    .title-product-list {
+        background: rgb(211, 209, 209);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px;
+
+        button.title {
+            width: max-content;
+            border-radius: 5px 5px 0 0;
+            line-height: 1;
+            outline: none;
+            border: none;
+            background: none;
+            font-weight: bold;
+            cursor: default;
+        }
+    }
+}

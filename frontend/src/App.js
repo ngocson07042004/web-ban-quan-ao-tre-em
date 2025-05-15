@@ -1,11 +1,12 @@
-//import { Route, Routes } from 'react-router-dom'
-import { ClientPage } from "./LayoutUI"
+import { Route, Routes } from 'react-router-dom'
+import { AdminPage, ClientPage } from './LayoutUI'
 
 function App() {
   return(
-    <>
-      <ClientPage/>
-    </>
+    <Routes>
+        <Route path="/admin/*" element={<AdminPage/>}/>
+        <Route path="/*" element={<ClientPage/>}/>
+    </Routes>
   )
 }
 

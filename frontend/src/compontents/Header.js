@@ -6,11 +6,11 @@ function Header() {
     return (
       <header className="header">
         <Layout container={"container"} row={"row py-2"}>
-          <Column col={6} sm={3} md={3} lg={3} xl={2} xxl={2} className={"img-header"}>
+          <Column col={6} sm={3} md={3} lg={2} xl={2} xxl={2} className={"img-header"}>
             <img src="./images/logo.png" alt="Logo" className="img-fluid mx-auto"/>
           </Column>
 
-          <Column col={12} sm={6} md={6} lg={3} xl={4} xxl={4} className={"input-search mt-1"}>
+          <Column col={12} sm={6} md={6} lg={4} xl={4} xxl={4} className={"input-search mt-1"}>
             <img src="./images/align-right.png" alt="Right" className="img-right img-fluid d-none"/>
             <InputSearch placeholder={"Tìm kiếm sản phẩm..."}/>
           </Column>
@@ -19,7 +19,7 @@ function Header() {
             <Info/>
           </Column>
 
-          <Column col={6} sm={3} md={3} lg={3} xl={2} xxl={2} className={"btn-group-header d-flex justify-content-around"}>
+          <Column col={6} sm={3} md={3} lg={2} xl={2} xxl={2} className={"btn-group-header d-flex justify-content-around"}>
             <button type="button" className="btn position-relative mt-2">
               <i className="fa-solid fa-cart-shopping fs-4"></i>
               <span className="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger">0</span>

@@ -13,7 +13,7 @@ const images = [
 
 function Slider() {
   return (
-    <div className="container-slider">
+    <div className="container-slider container">
       <Swiper
             spaceBetween={50}
             slidesPerView={1}

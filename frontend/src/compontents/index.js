@@ -4,8 +4,11 @@ import Navbar from './Navbar'
 import MenuProduct from './MenuProduct'
 import Slider from './Slider'
 import MenuBottom from './MenuBottom'
+import ItemProduct from './ItemProduct'
 import Header from './Header'
 import Footer from './Footer'
+import ProductList from './ProductList'
+import Cart from './Cart'
 
 export { 
     InputSearch, 
@@ -13,7 +16,10 @@ export {
     Navbar,
     MenuProduct,
     MenuBottom,
+    ItemProduct,
     Slider,
     Header,
-    Footer
+    Footer,
+    ProductList,
+    Cart
 }

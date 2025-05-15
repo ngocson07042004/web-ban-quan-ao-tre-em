@@ -1,0 +1,24 @@
+.item-product {
+    position: relative;
+
+    button:not(#btn-detail) {
+        position: absolute;
+        right: 5px;
+        display: none;
+        transition: 0.3s;
+
+        &#btn-cart {
+            top: 35px;
+        }
+
+        &#btn-heart {
+            top: 5px;
+        }
+    }
+
+    &:hover {
+        button#btn-cart, button#btn-heart {
+            display: block;
+        }
+    }
+}

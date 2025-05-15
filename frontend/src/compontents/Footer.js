@@ -109,7 +109,7 @@ function Footer() {
               </div>
                 
               <div className="social-icons">
-                <a href="http://github.com/ngocson07042004/" className="github">
+                <a href="http://github.com/ngocson07042004" className="github">
                   <i className="fa-brands fa-github fs-5 text-black"></i>
                 </a>
 
@@ -117,7 +117,7 @@ function Footer() {
                   <i className="fa-brands fa-facebook-f fs-5 text-black"></i>
                 </a>
                   
-                <a href="https://www.facebook.com/sondz0704">
+                <a href="https://www.facebook.com/son1232613">
                   <i className="fa-brands fa-twitter fs-5 text-black"></i>
                 </a>
               </div>

@@ -1,3 +1,4 @@
 import ClientPage from './ClientPage'
+import AdminPage from './AdminPage'
 
-export { ClientPage }
+export { ClientPage, AdminPage }
