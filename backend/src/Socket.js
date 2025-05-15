@@ -1,6 +1,5 @@
 const { Server } = require("socket.io")
 require("dotenv").config()
-const db = require("./database")
 
 const url_frontend = process.env.URL_FRONTEND
 

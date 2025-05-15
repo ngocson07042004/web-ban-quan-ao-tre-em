@@ -12,10 +12,6 @@ const connected = mysql.createConnection({
 connected.connect(err => {
     if(err) console.log(err)
     console.log("Connected!")
-    connected.query("USE clother_kid", error => {
-        if(error) console.log(error)
-        console.log("Connected database!")   
-    })
 })
 
 module.exports = connected
