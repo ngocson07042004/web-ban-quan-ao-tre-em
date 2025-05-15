@@ -7,7 +7,7 @@ function Home() {
   document.title = "T-Shop | Shop bán quần áo thời trang trẻ em"
   const [products, setProduct] = useState([])
   const { data } = useAxios(`${process.env.REACT_APP_URL_BACKEND}/get/api/all-product`)
-  console.log(process.env.REACT_APP_URL_BACKEND)
+  
   useEffect(() => {
     if(data){
       setProduct(data)
