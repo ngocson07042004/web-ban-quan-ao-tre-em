@@ -19,7 +19,7 @@ function MenuSlider() {
         <div 
             className="container-menu-slider"
             style={{ 
-                transform: isShowMenu ? "translateX(0)" : "translateX(-100%)",
+                transform: isShowMenu ? "translateX(0)" : "translateX(-120%)",
                 boxShadow: isShowMenu ? "3px 0 10px black" : "none"
             }}
         >
