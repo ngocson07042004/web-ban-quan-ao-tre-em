@@ -7,7 +7,7 @@ function ProductList({ title, gender, category, products }) {
     const productsDeffered = useDeferredValue(products)
     const [showAll, setShowAll] = useState(false)
 
-    const filteredProducts = productsDeffered.filter(p => p.genderProduct === gender || p.idCategory === category)
+    const filteredProducts = Array.isArray(productsDeffered) ? productsDeffered.filter(p => p.genderProduct === gender || p.idCategory === category) : []
     const visibleProducts = showAll ? filteredProducts : filteredProducts.slice(0, 4)
 
     return (
@@ -23,7 +23,7 @@ function ProductList({ title, gender, category, products }) {
 
             <Row row="row product-item">
                 {visibleProducts.map(product => (
-                <Column col={6} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.id} className="p-3">
+                <Column col={6} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.idProduct} className="p-3">
                     <ItemProduct product={product} />
                 </Column>
                 ))}

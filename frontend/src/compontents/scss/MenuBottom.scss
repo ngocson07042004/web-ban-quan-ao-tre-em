@@ -2,6 +2,7 @@ nav.fixed-bottom {
     background: white;
     box-shadow: 0 -4px 10px rgba(0, 0, 0, .3);
     display: none;
+    z-index: 5;
 
     ul.navbar-nav {
         li {

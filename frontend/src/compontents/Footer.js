@@ -84,7 +84,7 @@ function Footer() {
 
                 <li className="mt-3">
                   <i className="fa-brands fa-square-twitter"></i>
-                  <a href="https://www.facebook.com/sondz0704"> Twitter</a>
+                  <a href="https://x.com/son1232613"> Twitter</a>
                 </li>
               </ul>
             </Column>
@@ -117,7 +117,7 @@ function Footer() {
                   <i className="fa-brands fa-facebook-f fs-5 text-black"></i>
                 </a>
                   
-                <a href="https://www.facebook.com/son1232613">
+                <a href="https://x.com/son1232613">
                   <i className="fa-brands fa-twitter fs-5 text-black"></i>
                 </a>
               </div>

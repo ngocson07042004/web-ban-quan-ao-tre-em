@@ -9,6 +9,8 @@ import Header from './Header'
 import Footer from './Footer'
 import ProductList from './ProductList'
 import Cart from './Cart'
+import MenuSlider from './MenuSlider'
+import Toast from './Toast'
 
 export { 
     InputSearch, 
@@ -21,5 +23,7 @@ export {
     Header,
     Footer,
     ProductList,
-    Cart
+    Cart,
+    MenuSlider,
+    Toast
 }

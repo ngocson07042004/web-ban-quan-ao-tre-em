@@ -17,8 +17,8 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg">
             <Layout container={"container"} row={"row"}>
                 <div className="d-flex justify-content-center align-items-center col-lg-3 col-xl-3 col-xxl-3">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div className="dropdown">
+                        <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Danh sách sản phẩm
                         </button>
 

@@ -4,7 +4,7 @@ require("dotenv").config()
 const url_frontend = process.env.URL_FRONTEND
 
 function setupServer(server){
-  const io = new Server(server, { cors: { origin: url_frontend, methods: ["GET", "POST"] } })
+  const io = new Server(server, { cors: { origin: url_frontend, methods: ["GET", "POST" ,"DELETE"] } })
 
   io.on("connection", socket => {
     console.log("connected")

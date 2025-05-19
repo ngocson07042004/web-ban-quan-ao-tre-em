@@ -1,4 +1,4 @@
 import useAxios from './useAxios'
-import useJoinArray  from './useJoinArray'
+import useDataGlobal from './useDataGlobal'
 
-export { useAxios, useJoinArray }
+export { useAxios, useDataGlobal }

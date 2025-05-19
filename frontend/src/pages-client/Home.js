@@ -18,8 +18,7 @@ function Home() {
     <main className="main" style={{ minHeight: "100vh" }}>
       <Slider/>
 
-      <ProductList title="Quần áo bé trai" gender="Trai" products={products} />
-      <ProductList title="Quần áo bé gái" gender="Gái" products={products} />
+      <ProductList title="Quần áo" category={`${process.env.REACT_APP_CLOTHER}`} products={products} />
       <ProductList title="Mũ" category={`${process.env.REACT_APP_CAP}`} products={products} />
     </main>
   )
