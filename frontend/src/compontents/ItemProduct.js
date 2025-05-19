@@ -32,16 +32,17 @@ function ItemProduct({ product }) {
         return`${number.toLocaleString("vi-VN")}đ`
     }
 
-    const handleAddToCart = async(user, idProduct) => {
+    const handleAddToCart = async(user, idProduct, nameProduct, imageUrl, price) => {
         const res = await axios.post(`${process.env.REACT_APP_URL_BACKEND}/post/api/add-to-cart`, { user, idProduct })
 
         try {
+
             if(res.data === "Error") {
                 toast.error("Thêm giỏ hàng thất bại!")
             }
             else {
                 toast.success("Thêm giỏ hàng thành công!")
-                setCarts(prev => [...prev, {user, idProduct}])
+                setCarts(prev => [...prev, {user, nameProduct, imageUrl, price}])
             }
         }
         catch(err) {
@@ -62,7 +63,8 @@ function ItemProduct({ product }) {
                     <i className="fa-solid fa-heart"></i>
                 </button>
 
-                <button type="button" className="btn text-center" id="btn-cart" onClick={() => handleAddToCart(auth.username, product.idProduct)}>
+                <button type="button" className="btn text-center" id="btn-cart" 
+                    onClick={() => handleAddToCart(auth.username, product.idProduct, product.nameProduct, product.imageUrl, product.price)}>
                     <i className="fa-solid fa-shopping-cart"></i>
                 </button>
 
