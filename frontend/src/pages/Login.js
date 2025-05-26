@@ -2,99 +2,158 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import './scss/Login.scss'
-
-export const setLogin = {
-    auth: "",
-    status: false,
-} 
+import { Column, Layout } from '../LayoutContainer'
+import { useDataGlobal } from '../hooks'
 
 function Login() {
     document.title = "Đăng nhập hệ thống"
-
-    const [showPassword, setShowPassword] = useState(false)
-    const [identifier, setIdentifier] = useState("")
-    const [password, setPassword] = useState("")
-    const [role, setRole] = useState("")
+    const { setCheckLogin } = useDataGlobal()
 
     const homeNav = useNavigate()
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        role: "",
+        hashCode: ""
+    })
 
-    const handleSubmit = async(e) => {
+    const handleChange = (e) =>{
+        const { name, value } = e.target
+        setFormData({ ...formData, [name]: value.trim() })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const res = await axios.post(`${process.env.REACT_APP_URL_BACKEND}/post/api`, { identifier, password, role })
+        const res = await axios.post(`${process.env.REACT_APP_URL_BACKEND}/post/api/login`, 
+            formData, { withCredentials: true })
         try {
-            if(res.data === "Not User") {
+            if(res.data === "User not found") {
                 toast.info("Tài khoản không tồn tại!")
             }
-            else if(res.data === "Not Password") {
+            else if(res.data === "Password is not valid") {
                 toast.error("Mật khẩu không đúng!")
+            }
+            else if(res.data === "Code is not valid"){
+                toast.error("Mã code không đúng!")
             }
             else {
                 toast.success("Đăng nhập thành công!")
                 homeNav("/")
-                setLogin.auth = identifier
-                setLogin.status = true
+                setCheckLogin({ auth: res.data.user.username, status: res.data.success })
             }
         }
         catch(err) {
+            console.log(err)
             toast.error("Không thể kết nối tới máy chủ!")
         }
     }
 
     return (
-        <form className="form-login" onSubmit={handleSubmit}>
-            <div className="form-title">
-                <i className="fa-solid fa-user fs-1 fw-bold text-center"></i>
-                <h3 className="text-center">Đăng nhập</h3>
-            </div>
+        <>
+            <header className="header-login" style={{ width: "100%", height: "10%" }}>
+                <Layout container={"container p-3"} row={"row"}>
+                    <Column lg={12} className={"d-flex p-1"}>
+                        <img src="../images/logo-title.png" alt="logo" className="img-fluid" />
+                        <h3 className="mt-3">Đăng nhập</h3>
+                    </Column>
+                </Layout>
+            </header>
 
-            <div className="form-input username">
-                <label htmlFor="username"><i className="fa-solid fa-user fw-bold"></i></label>
-                <input 
-                    type="text" 
-                    name="username" 
-                    id="username"
-                    className="fs-6"
-                    onChange={e => setIdentifier(e.target.value)}
-                    placeholder="Nhập tên đăng nhập..."
-                    required
-                />
-            </div>
+            <main className="main-login" style={{ width: "100%", height: "90%", background: "rgba(167, 167, 167, 0.5)" }}>
+                <Layout container={"container p-md-3"} row="row p-md-3">
+                    <Column col={12} sm={12} md={6} lg={6} xl={6} xxl={6} className={"d-flex justify-content-center"}>
+                        <img src="../images/logo.png" alt="logo" />
+                    </Column>
 
-            <div className="form-input password mt-3">
-                <label htmlFor="password"><i className="fa-solid fa-lock fw-bold"></i></label>
-                <input 
-                    type={showPassword ? "text" : "password"}
-                    name="password" 
-                    id="password"
-                    className="fs-6"
-                    onChange={e => setPassword(e.target.value)}
-                    placeholder="Nhập mật khẩu..."
-                    required
-                />
-                
-                <button type="button" className="btn" onClick={() => setShowPassword(!showPassword)}>
-                    <i className={showPassword ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}></i>
-                </button>
-            </div>
+                    <Column col={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                        <form onSubmit={handleSubmit} className="bg-white h-auto p-3 rounded">
+                            <h5 className="text-center">Đăng nhập</h5>
+                            <div className="input-group mt-3 username">
+                                <span className="input-group-text" id="username">
+                                    <i className="fa-solid fa-user"></i>
+                                </span>
 
-           <Link to="/change-password">Quên mật khẩu?</Link>
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    placeholder="Nhập tên đăng nhập..."
+                                    id="username"
+                                    name="username"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-           <div className="form-input select-role mt-2">
-                <label htmlFor="selectRole"><i className="fa-solid fa-user-tie fw-bold"></i></label>
-                <select id="selectRole" name="role" value={role} onChange={e => setRole(e.target.value)}>
-                    <option selected>--- Chọn quyền truy cập ---</option>
-                    <option value="Quản trị viên">Quản trị viên</option>
-                    <option value="Khách hàng">Khách hàng</option>
-                </select>
-           </div>
+                            <div className="input-group mt-3 password">
+                                <span className="input-group-text" id="password">
+                                    <i className="fa-solid fa-lock"></i>
+                                </span>
 
-           <div className="btns-group mt-3">
-                <button type="submit">Đăng nhập</button>
-                <span>Đã có tài khoản? <Link to="sign-up">Đăng ký</Link></span>
-           </div>
-        </form>
+                                <input 
+                                    type="password" 
+                                    className="form-control" 
+                                    placeholder="Nhập mật khẩu..."
+                                    id="password"
+                                    name="password"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <Link 
+                                className="text-primary-emphasis text-decoration-underline" 
+                                to="/auth/change-password"
+                            >Quên mật khẩu?</Link>
+
+                            <div className="input-group mt-3 role">
+                                <span className="input-group-text" id="role">
+                                    <i className="fa-solid fa-user-tie"></i>
+                                </span>
+
+                                <select 
+                                    onChange={handleChange} 
+                                    className="form-select form-control" 
+                                    id="role" 
+                                    name="role"
+                                >    
+                                    <option value="">-- Chọn quyền truy cập --</option>
+                                    <option value="Quản trị viên">Quản trị viên</option>
+                                    <option value="Khách hàng">Khách hàng</option>
+                                </select>
+                            </div>
+
+                            <div className="input-group mt-3 hash-code">
+                                <span className="input-group-text" id="hashCode">
+                                    <i className="fa-solid fa-lock"></i>
+                                </span>
+
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    placeholder="Nhập mã code..."
+                                    id="hashCode"
+                                    name="hashCode"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="btn-group d-flex flex-column mt-4" role="group" aria-label="Basic example">
+                                <button type="submit" className="btn btn-danger rounded text-white mx-auto">
+                                    Đăng nhập
+                                </button>
+
+                                <span className="text-center">
+                                    Bạn chưa có tài khoản?
+                                    <Link to="/auth/register" className="text-primary-emphasis"> Đăng ký </Link>
+                                </span>
+                            </div>
+                        </form>
+                    </Column>
+                </Layout>
+            </main>
+        </>
     )
 }
 

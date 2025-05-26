@@ -1,4 +1,4 @@
-import { useDeferredValue, useState } from 'react'
+import { useDeferredValue } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Row, Column } from '../LayoutContainer'
@@ -6,29 +6,36 @@ import { useDataGlobal } from '../hooks'
 import './scss/Cart.scss'
 
 function Cart() {
-    const { isShowCart, setIsShowCart, carts, setCarts } = useDataGlobal()
-    const [selectedCartIds, setSelectedCartIds] = useState([])
+    const { isShowCart, setIsShowCart, carts, setCarts, 
+        selectedCartIds, setSelectedCartIds  } = useDataGlobal()
 
     const deferredCart = useDeferredValue(carts)
 
     // Hàm xoá sản phẩm
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`${process.env.REACT_APP_URL_BACKEND}/delete/api/cart-product/${id}`)
+            const res = await axios.delete(
+                `${process.env.REACT_APP_URL_BACKEND}/delete/api/cart-product/${id}`,
+                { withCredentials: true }
+            )
             
-            // Cập nhật lại carts và selectedCartIds
-            setCarts(prev => prev.filter(item => item.idCart !== id))
-            setSelectedCartIds(prev => prev.filter(itemId => itemId !== id))
             if(res.data === "Error") {
                 toast.error("Xoá sản phẩm thất bại!")
             }
+            else if(res.data === "Token not provided") {
+                toast.error("Bạn chưa được cấp quyền để sử dụng tính năng này!")
+            }
+            else if(res.data === "Invalid or expired token") {
+                toast.error("Quyền truy cập đã hết hạn hoặc xảy ra lỗi!")
+            }
             else {
                 toast.success("Xoá sản phẩm thành công!")
+                setCarts(prev => prev.filter(item => item.idCart !== id))
+                setSelectedCartIds(prev => prev.filter(itemId => itemId !== id))
             }
         } 
         catch (err) {
             console.error(err)
-            alert("Xóa sản phẩm thất bại!")
         }
     }
 
@@ -43,8 +50,7 @@ function Cart() {
 
     // Hàm chuyển đổi
     const shortenText = (text, maxLength) => {
-        if (typeof text !== 'string') return ''
-        if (text.length <= maxLength) return text
+        if (text?.length <= maxLength) return text
         return text.slice(0, maxLength).trim() + '...'
     }
 
@@ -86,7 +92,7 @@ function Cart() {
                 <ul className="list-cart">
                     {Array.isArray(deferredCart) && deferredCart.length > 0 ? 
                         deferredCart.map(item => (
-                            <li key={item.idCart}>
+                            <li key={item.uid} className="mt-2">
                                 <input 
                                     type="checkbox" 
                                     name="checkCart"
@@ -94,7 +100,7 @@ function Cart() {
                                     onChange={() => handleCheckItem(item.idCart)}
                                 />
                                 <img src={item.imageUrl} alt={item.nameProduct} />
-                                <h5>{shortenText(item.nameProduct, 30)}</h5>
+                                <h6>{shortenText(item.nameProduct, 30)}</h6>
                                 <span>{formatPrice(item.price)}</span>
                                 <button 
                                     type="button" 

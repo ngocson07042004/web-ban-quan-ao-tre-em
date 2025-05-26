@@ -4,19 +4,23 @@ import { appContext } from '../context'
 function useDataGlobal() {
     const { isShowCart, 
             setIsShowCart,
-            isShowMenu,
-            setIsShowMenu,
             carts,
-            setCarts
+            setCarts,
+            checkLogin, 
+            setCheckLogin,
+            selectedCartIds, 
+            setSelectedCartIds
     } = useContext(appContext)
 
     return {
         isShowCart, 
-        setIsShowCart, 
-        isShowMenu,
-        setIsShowMenu,
+        setIsShowCart,
         carts,
-        setCarts
+        setCarts,
+        checkLogin, 
+        setCheckLogin,
+        selectedCartIds, 
+        setSelectedCartIds
     }
 }
 

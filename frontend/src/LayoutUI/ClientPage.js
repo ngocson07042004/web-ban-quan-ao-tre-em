@@ -1,11 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
-import { Home, Introduction, Product, Question, Recruitment, Contact, Detail } from '../pages-client'
-import { Header, Footer, MenuBottom, Cart, MenuSlider } from '../compontents'
+import { Home, Introduction, Product, Question, Recruitment, Contact, Detail, Search } from '../pages-client'
+import { Header, Footer, Cart } from '../compontents'
 import { useDataGlobal } from '../hooks'
-import './scss/ClientPage.scss'
 
 function ClientPage() {
-    const { isShowCart, isShowMenu, isShowFavorite } = useDataGlobal()
+    const { isShowCart, isShowMenu } = useDataGlobal()
     
     return (
         <>
@@ -19,16 +18,15 @@ function ClientPage() {
                 <Route path="/question" element={<Question/>}/>
                 <Route path="/recruitment" element={<Recruitment/>}/>
                 <Route path="/contact" element={<Contact/>}/>
+                <Route path="/search" element={<Search/>}/>
             </Routes>
 
             <Footer/>
-            <MenuBottom/>
             <Cart/>
-            <MenuSlider/>
             <div 
                 className="overlay" 
                 id="overlay"
-                style={{ display: isShowCart || isShowFavorite || isShowMenu ? "block" : "none" }}
+                style={{ display: isShowCart || isShowMenu ? "block" : "none" }}
             ></div>
         </>
     )

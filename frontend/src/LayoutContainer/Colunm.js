@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-function Column({ sm = 0, md = 0, lg = 0, xl = 0, xxl = 0, col = 0, className = "", children }) {
+function Column({ sm = 0, md = 0, lg = 0, xl = 0, xxl = 0, col = 0, className = "", id="", children }) {
     const classCol = useMemo(() => {
         const classes = []
 
@@ -17,7 +17,7 @@ function Column({ sm = 0, md = 0, lg = 0, xl = 0, xxl = 0, col = 0, className = 
     }, [sm, md, lg, xl, xxl, col, className])
 
     return (
-        <div className={classCol}>
+        <div className={classCol} id={id}>
             {children}
         </div>
     )

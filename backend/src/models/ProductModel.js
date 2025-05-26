@@ -1,5 +1,5 @@
-const db = require("../database")
-const { Block, Blockchain } = require("../blockchain")
+const db = require("../libs/database")
+const { Block, Blockchain } = require("../libs/blockchain")
 
 const ProductModel = {
     AllProduct: (callback) => {
@@ -12,8 +12,9 @@ const ProductModel = {
     getProductWithCart: (callback) => {
         let sql = `SELECT c.idCart, u.username, p.imageUrl, p.nameProduct, p.price FROM cart_tb AS c
                     INNER JOIN user_tb AS u ON c.username = u.username
-                    INNER JOIN product_tb as p ON c.idProduct = p.idProduct`
-        
+                    INNER JOIN product_tb as p ON c.idProduct = p.idProduct
+                `
+
         db.query(sql, (err, data) => callback(err, data))
     }, 
 
@@ -25,19 +26,19 @@ const ProductModel = {
     },
 
     postProductCart: (getReq, callback) => {
-        const { user, idProduct } = getReq.body
+        const { uid, user, idProduct } = getReq.body
 
-        const blockchain = new Blockchain()
-        const data = { user, idProduct }
-        const previousHash = blockchain.getLatestBlock().hash
-        const block = new Block(data, previousHash)
-        blockchain.addBlock(block)
+        // const blockchain = new Blockchain()
+        // const data = { user, idProduct }
+        // const previousHash = blockchain.getLatestBlock().hash
+        // const block = new Block(data, previousHash)
+        // blockchain.addBlock(block)
 
-        const idCart = block.getHash()
-
-        let sql = `INSERT INTO cart_tb(idCart, username, idProduct) VALUES (?, ?, ?)`
-        db.query(sql, [idCart, user, idProduct], (err, data) => callback(err, data))
-    }
+        // const idCart = block.getHash()
+        
+        let sql = `INSERT INTO cart_tb (idCart, username, idProduct) VALUES (?, ?, ?)`
+        db.query(sql, [uid, user, idProduct], (err, data) => callback(err, data))
+    },
 
 }
 

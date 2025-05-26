@@ -23,7 +23,7 @@ function ProductList({ title, gender, category, products }) {
 
             <Row row="row product-item">
                 {visibleProducts.map(product => (
-                <Column col={6} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.idProduct} className="p-3">
+                <Column col={12} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.uid} className="p-3">
                     <ItemProduct product={product} />
                 </Column>
                 ))}
