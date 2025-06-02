@@ -86,8 +86,8 @@ const UserController = {
                 const payload = { username: user.username, email: user.email, phone: user.phone }
                 const code = createKey(hashCode)
                 const token = signToken(payload, code, "5m")
-                res.cookie("token", token, { maxAge: 5 * 60 * 1000, httpOnly: true })
-                res.cookie("secret", code, { maxAge: 5 * 60 * 1000, httpOnly: true })
+                res.cookie("token", token, { maxAge: 5 * 60 * 1000, httpOnly: true, domain: process.env.URL_FRONTEND })
+                res.cookie("secret", code, { maxAge: 5 * 60 * 1000, httpOnly: true, domain: process.env.URL_FRONTEND })
                 return res.json({ token, code, user, success: true })
             }
             catch(err) {
