@@ -31,3 +31,4 @@ app.use("/", routerC)
 
 // Server running
 server.listen(port, () => console.log(`Server is running on port ${port}`))
+console.log("🚀 URL_FRONTEND:", process.env.URL_FRONTEND)
