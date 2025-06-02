@@ -9,7 +9,11 @@ function useDataGlobal() {
             checkLogin, 
             setCheckLogin,
             selectedCartIds, 
-            setSelectedCartIds
+            setSelectedCartIds,
+            query, 
+            setQuery,
+            filter, 
+            setFilter
     } = useContext(appContext)
 
     return {
@@ -20,7 +24,11 @@ function useDataGlobal() {
         checkLogin, 
         setCheckLogin,
         selectedCartIds, 
-        setSelectedCartIds
+        setSelectedCartIds,
+        query, 
+        setQuery,
+        filter, 
+        setFilter
     }
 }
 

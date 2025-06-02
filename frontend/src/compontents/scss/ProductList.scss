@@ -1,4 +1,5 @@
 .container-product-list {
+
     .title-product-list {
         background: rgb(211, 209, 209);
         display: flex;
@@ -6,15 +7,34 @@
         align-items: center;
         padding: 7px;
 
-        button.title {
+        button {
             width: max-content;
-            border-radius: 5px 5px 0 0;
-            line-height: 1;
+            font-size: clamp(0.875rem, 0.8295rem + 0.2273vw, 1rem);
             outline: none;
             border: none;
             background: none;
-            font-weight: bold;
-            cursor: default;
+
+            &.title {
+                border-radius: 5px 5px 0 0;
+                line-height: 1;
+                font-weight: bold;
+                cursor: default;
+           }
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .container-product-list {
+        width: 100%;
+        padding: 0;
+
+        .title-product-list {
+            width: 100%;
+        }
+
+        .product-item {
+            padding: 0 12px;
         }
     }
 }

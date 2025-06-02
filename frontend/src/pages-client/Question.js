@@ -51,7 +51,7 @@ function Question() {
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
-            <h3>CÂU HỎI THƯỜNG GẶP</h3>
+            <h3 style={{ fontSize: "clamp(1.25rem, 1.1364rem + 0.5682vw, 1.5625rem)" }}>CÂU HỎI THƯỜNG GẶP</h3>
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>

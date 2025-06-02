@@ -1,46 +1,64 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { ItemProduct } from '../compontents'
-
-function removeVietnameseTones(str) {
-  return str.normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d").replace(/Đ/g, "D")
-}
+import { Column, Container, Row } from '../LayoutContainer'
+import { useDataGlobal } from '../hooks'
 
 function Search() {
-  const [searchParams] = useSearchParams()
-  const [products, setProducts] = useState([])
-  const keywordRaw = searchParams.get("search") || ""
-  const keyword = removeVietnameseTones(keywordRaw.toLowerCase())
+  const { query, filter, setFilter } = useDataGlobal()
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL_BACKEND}/api/all-product`)
-      .then(res => {
-        const filtered = res.data.filter(product =>
-          removeVietnameseTones(product.name.toLowerCase()).includes(keyword)
-        )
-        setProducts(filtered)
-      })
-      .catch(err => console.log(err))
-  }, [keyword])
-
+    const fetchData = async () => {
+      if (query.trim() !== "") {
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_URL_BACKEND}/get/api/search?q=${query}`)
+          
+          if(res.data === "Error") {
+            setFilter([])
+          }
+          else {
+            setFilter(res.data)
+          }
+        }
+      catch(err) {
+        console.log(err)
+        setFilter([])
+      }
+    }
+  }
+  fetchData()
+  }, [query, setFilter])
+  
   return (
-    <div>
-      <h2>Kết quả cho: "{keywordRaw}"</h2>
-      {products.length ? (
-        <ul>
-          {products.map(product => (
-            <li key={product.idProduct}>
-              <ItemProduct product={product} />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Không tìm thấy sản phẩm nào.</p>
-      )}
-    </div>
+    <main className="main mt-4" style={{ minHeight: "70vh" }}>
+      <Container container={"container"}>
+        <Row row={"row"}>
+          <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
+            <Link to="/">Trang chủ</Link> / <span className="text-success">Tìm kiếm sản phẩm</span>
+          </Column>
+
+          <Column col={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+            <h4>Trả về kết quả cho: "{query}"</h4>
+          </Column>
+
+          <Column col={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+            {filter.length ? 
+            (<Row row={"row"}>
+              {filter.map(item => (
+                <Column col={3}>
+                  <ItemProduct product={item}/>
+                </Column>
+            ))}
+            </Row>) : 
+            (<div>
+              <p>Không có sản phẩm nào</p>
+            </div>)
+            }
+          </Column>
+        </Row>
+      </Container>
+    </main>
   )
 }
 

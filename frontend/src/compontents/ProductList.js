@@ -13,7 +13,7 @@ function ProductList({ title, gender, category, products }) {
     return (
         <Container container={"container container-product-list"}>
             <div className="title-product-list">
-                <button className="title fs-5">{title}</button>
+                <button className="title">{title}</button>
                 {filteredProducts.length > 4 && (
                     <button className="btn btn-link" type="button" onClick={() => setShowAll(!showAll)}>
                         {showAll ? "Thu gọn" : "Xem tất cả"}
@@ -23,7 +23,7 @@ function ProductList({ title, gender, category, products }) {
 
             <Row row="row product-item">
                 {visibleProducts.map(product => (
-                <Column col={12} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.uid} className="p-3">
+                <Column col={6} sm={6} md={6} lg={3} xl={3} xxl={3} key={product.idProduct} className="p-1 p-sm-3">
                     <ItemProduct product={product} />
                 </Column>
                 ))}

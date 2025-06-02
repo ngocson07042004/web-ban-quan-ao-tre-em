@@ -9,21 +9,22 @@ function Recruitment() {
       <Container container={"container"}>
         <Row row={"row mt-2"}>
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
-            <Link to="/">Trang chủ</Link> / <span className="text-success">Giới thiệu</span>
+            <Link to="/">Trang chủ</Link> / <span className="text-success">Tuyển dụng</span>
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2"}>
-            <h3>GIỚI THIỆU</h3>
+            <h3 style={{ fontSize: "clamp(1.25rem, 1.1364rem + 0.5682vw, 1.5625rem)" }}>TUYỂN DỤNG</h3>
             <hr />
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12} className={"p-2 text-center"}>
-            <h3 className="fw-bold">FRUIT MART TUYỂN DỤNG NHÂN VIÊN BÁN HÀNG PART-TIME</h3>
-            <img src="./images/tuyen-dung.jpg" alt="Recruitment" className="img-fluid"/>
+            <h3 style={{ fontSize: "clamp(1rem, 1.13rem + 0.5682vw, 1.5625rem)", margin: 0 }}
+            >T-SHOP TUYỂN DỤNG NHÂN VIÊN BÁN HÀNG PART-TIME</h3>
+            <img src="./images/tuyen-dung.jpg" alt="recruitment" className="img-fluid"/>
           </Column>
 
           <Column sm={12} md={12} lg={12} xl={12} xxl={12}>
-            <ul className="fs-4">
+            <ul style={{ fontSize: "clamp(0.875rem, 0.8295rem + 0.2273vw, 1rem)", padding: 0, margin: 0 }}>
               <li>
                 <strong><br />MÔ TẢ CÔNG VIỆC:</strong>
                 <ol style={{listStyleType: "square"}}>

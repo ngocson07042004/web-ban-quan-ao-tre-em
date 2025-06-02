@@ -1,0 +1,15 @@
+.quantity-product {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+        width: 40px;
+        background: none;
+        outline: none;
+        border: 1px solid rgb(218, 209, 209);
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+}

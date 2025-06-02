@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser")
 require("dotenv").config()
 const routerP = require("./src/routers/ApiProductRouter")
 const routerU = require("./src/routers/ApiUserRouter")
+const routerC = require("./src/routers/ApiCheckProduct")
 
 // Config
 const app = express()
@@ -26,6 +27,7 @@ const server = http.createServer(app)
 // API routes
 app.use("/", routerU)
 app.use("/", routerP)
+app.use("/", routerC)
 
 // Server running
 server.listen(port, () => console.log(`Server is running on port ${port}`))

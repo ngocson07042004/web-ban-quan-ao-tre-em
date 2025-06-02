@@ -1,5 +1,4 @@
 const db = require("../libs/database")
-const { Block, Blockchain } = require("../libs/blockchain")
 
 const ProductModel = {
     AllProduct: (callback) => {
@@ -8,15 +7,22 @@ const ProductModel = {
         db.query(sql, (err, data) => callback(err, data))
     },
     
-    // Cart
     getProductWithCart: (callback) => {
-        let sql = `SELECT c.idCart, u.username, p.imageUrl, p.nameProduct, p.price FROM cart_tb AS c
+        let sql = `SELECT idCart, u.username, p.idProduct, p.imageUrl, p.nameProduct, p.price, c.quantity, c.size 
+                    FROM cart_tb AS c
                     INNER JOIN user_tb AS u ON c.username = u.username
                     INNER JOIN product_tb as p ON c.idProduct = p.idProduct
                 `
 
         db.query(sql, (err, data) => callback(err, data))
     }, 
+
+    checkCart: (getReq, callback) => {
+        const { user, idProduct } = getReq.query
+        const sql = `SELECT * FROM cart_tb WHERE username = ? AND idProduct = ?`
+
+        db.query(sql, [user, idProduct], (err, data) => callback(err, data))
+    },
 
     deleteProductWithCart: (getReq, callback) => {
         let sql = `DELETE FROM cart_tb WHERE idCart = ?`
@@ -26,20 +32,33 @@ const ProductModel = {
     },
 
     postProductCart: (getReq, callback) => {
-        const { uid, user, idProduct } = getReq.body
-
-        // const blockchain = new Blockchain()
-        // const data = { user, idProduct }
-        // const previousHash = blockchain.getLatestBlock().hash
-        // const block = new Block(data, previousHash)
-        // blockchain.addBlock(block)
-
-        // const idCart = block.getHash()
+        const { uid, user, idProduct, quantity } = getReq.body
         
-        let sql = `INSERT INTO cart_tb (idCart, username, idProduct) VALUES (?, ?, ?)`
-        db.query(sql, [uid, user, idProduct], (err, data) => callback(err, data))
+        let sql = `INSERT INTO cart_tb (idCart, username, idProduct, quantity) VALUES (?, ?, ?, ?)`
+
+        db.query(sql, [uid, user, idProduct, quantity], (err, data) => callback(err, data))
     },
 
+    updateProductCart: (getReq, callback) => {
+        const { user, idProduct, quantity } = getReq.body
+        let sql = `UPDATE cart_tb SET quantity = ? WHERE username = ? AND idProduct = ?`
+        
+        db.query(sql, [quantity, user, idProduct], (err, data) => callback(err, data))
+    },
+
+    updateAddProductCart: (getReq, callback) => {
+        const { user, idProduct, quantity } = getReq.body
+        let sql = `UPDATE cart_tb SET quantity = quantity + ? WHERE username = ? AND idProduct = ?`
+        
+        db.query(sql, [quantity, user, idProduct], (err, data) => callback(err, data))
+    },
+
+    searchProduct: (getReq, callback) => {
+        const search = getReq.query.q || ""
+
+        let sql = `SELECT * FROM product_tb WHERE nameProduct LIKE ?`
+        db.query(sql, [`%${search}%`], (err, data) => callback(err, data))
+    }
 }
 
 module.exports = ProductModel

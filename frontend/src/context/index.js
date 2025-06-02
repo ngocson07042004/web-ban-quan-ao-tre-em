@@ -8,6 +8,8 @@ export default function Provider({ children }) {
   const [carts, setCarts] = useState([])
   const [selectedCartIds, setSelectedCartIds] = useState([])
   const [checkLogin, setCheckLogin] = useState({ auth: "", status: false })
+  const [filter, setFilter] = useState([])
+  const [query, setQuery] = useState("")
 
   useEffect(() => {
     if(!checkLogin.auth) return
@@ -17,7 +19,7 @@ export default function Provider({ children }) {
       { withCredentials: true }
     )
     .then(res => {
-      const filtered = res.data.filter(item => item.username === checkLogin.auth)
+      const filtered = Array.isArray(res.data) ? res.data.filter(item => item.username === checkLogin.auth) : []
       setCarts(filtered)
     })
     .catch(err => console.log(err))
@@ -33,7 +35,11 @@ export default function Provider({ children }) {
         checkLogin, 
         setCheckLogin,
         selectedCartIds, 
-        setSelectedCartIds
+        setSelectedCartIds,
+        query, 
+        setQuery,
+        filter, 
+        setFilter
       }}
     >
       {children}

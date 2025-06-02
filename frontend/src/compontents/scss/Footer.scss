@@ -6,56 +6,101 @@ footer.footer {
         color: white;
     }
 
-    ul {
-        width: 100%;
+   .container-footer {
+        padding: 30px;
 
-        li {
+        h6 {
+            font-size: clamp(1rem, 0.9091rem + 0.4545vw, 1.25rem);
+        }
+
+        p, button {
+            font-size: clamp(0.875rem, 0.8295rem + 0.2273vw, 1rem);
+        }
+
+        ul {
             width: 100%;
 
-            i {
-                width: 10px;
-            }
+            li {
+                width: 100%;
+                font-size: clamp(0.875rem, 0.8295rem + 0.2273vw, 1rem);
 
-            span, a {
-                width: calc(100% - 10px);
-                margin-left: 10px;
-            }
-        }
-    }
-
-    .newsletter-box {
-        max-width: 600px;
-        margin: 0 auto;
-    
-        .form-control {
-            border-radius: 0;
-        }
-        
-        .btn-danger {
-            border-radius: 3px;
-        }
-    }
-    .social-icons {
-        a {
-            margin: 0 4px;
-            padding: 4px;
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            line-height: 36px;
-            text-align: center;
-            background: white;
-            border-radius: 0;
-
-            i {
-                transition: .2s ease-in-out;
-            }
-
-            &:hover {
                 i {
-                    transform: scale(1.05);
+                    width: 10px;
+                }
+
+                span, a {
+                    width: calc(100% - 10px);
+                    margin-left: 10px;
                 }
             }
         }
-    }
+
+        .newsletter-box {
+            max-width: 600px;
+            margin: 0 auto;
+        
+            .form-control {
+                border-radius: 0;
+            }
+            
+            .btn-danger {
+                border-radius: 3px;
+            }
+        }
+        .social-icons {
+            a {
+                margin: 0 4px;
+                padding: 4px;
+                display: inline-block;
+                width: 35px;
+                height: 35px;
+                line-height: 36px;
+                text-align: center;
+                background: white;
+                border-radius: 0;
+                overflow: hidden;
+                position: relative;
+
+                &.github::before, &.facebook::before, &.twitter::before {
+                    content: "";
+                    position: absolute;
+                    width: 40px;
+                    height: 40px;
+                    top: 40%;
+                    left: -90%;
+                    transform: rotate(45deg);
+                    transition: .5s linear;
+                }
+
+                &.github::before{
+                    background: rgba(40, 40, 41, 0.5);
+                    
+                }
+
+                &.facebook::before{
+                    background: rgba(84, 84, 117, 0.5);
+                }
+
+                &.twitter::before {
+                    background: rgba(153, 161, 36, 0.5);
+                }
+
+                i {
+                    transition: .2s ease-in-out;
+                }
+
+                &:hover {
+                    i {
+                        transform: scale(1.05);
+                    }
+
+                    &.github::before, &.facebook::before, &.twitter::before {
+                        width: 120px;
+                        height: 120px;
+                        transform: skewX(10px);
+                    }
+                }
+            }
+        }
+   }
 }

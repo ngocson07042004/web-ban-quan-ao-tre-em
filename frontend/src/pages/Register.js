@@ -4,11 +4,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Column, Layout } from '../LayoutContainer'
 
-export const setLogin = {
-    auth: "",
-    status: false,
-} 
-
 function Register() {
     document.title = "Đăng ký"
 
@@ -18,12 +13,13 @@ function Register() {
         username: "",
         password: "",
         confirmPassword: "",
+        fullname: "",
         avatar: "",
         email: "",
         phone: "",
         address: "",
         gender: "",
-        hashCode: "",
+        hashCode: ""
     })
 
     const handleChange = (e) =>{
@@ -43,12 +39,8 @@ function Register() {
         e.preventDefault()
         
         const { password, confirmPassword } = formData
-        const data = new FormData()
 
-        for (let key in formData)
-            data.append(key, formData[key])
-
-        const res = await axios.post(`${process.env.REACT_APP_URL_BACKEND}/post/api/register`, data)
+        const res = await axios.post(`${process.env.REACT_APP_URL_BACKEND}/post/api/register`, formData)
         
 
         if(password !== confirmPassword) {
@@ -58,6 +50,9 @@ function Register() {
         try {
             if(res.data === "Username is exist") {
                 toast.info("Tài khoản đã tồn tại!")
+            }
+            else if(res.data === "Error") {
+                toast.error("Đăng ký thất bại!")
             }
             else {
                 toast.success("Đăng ký thành công")
@@ -81,7 +76,7 @@ function Register() {
                 </Layout>
             </header>
 
-            <main className="main-register" style={{ width: "100%", height: "90%", background: "rgba(167, 167, 167, 0.5)" }}>
+            <main className="main-register" style={{ width: "100%", height: "90%", background: "rgba(167, 167, 167, 0.3)" }}>
                 <Layout container={"container p-sm-3"} row="row p-sm-3">
                     <Column col={12} sm={12} md={6} lg={6} xl={6} xxl={6} className={"d-flex justify-content-center"}>
                         <img src="../images/logo.png" alt="logo" className="img-fluid" />
@@ -117,6 +112,21 @@ function Register() {
                                     placeholder="Nhập email..."
                                     id="email"
                                     name="email"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            
+                            <div className="input-group mt-3 fullname">
+                                <span className="input-group-text" id="fullname">
+                                    <i className="fa-solid fa-user"></i>
+                                </span>
+
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    placeholder="Nhập họ tên..."
+                                    id="fullname"
+                                    name="fullname"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -230,8 +240,8 @@ function Register() {
                                 />
                             </div>
 
-                             <div className="input-group mt-3 hash-code">
-                                <span className="input-group-text" id="hashCode">
+                            <div className="input-group mt-3 hash-code">
+                                <span className="input-group-text" id="hash-code">
                                     <i className="fa-solid fa-lock"></i>
                                 </span>
 
@@ -239,7 +249,7 @@ function Register() {
                                     type="text" 
                                     className="form-control" 
                                     placeholder="Nhập mã code..."
-                                    id="hashCode"
+                                    id="hash-code"
                                     name="hashCode"
                                     onChange={handleChange}
                                 />

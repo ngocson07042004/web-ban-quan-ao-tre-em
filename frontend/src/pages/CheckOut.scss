@@ -1,0 +1,23 @@
+.show-check-product {
+    display: flex;
+    padding: 5px;
+    border-bottom: 1px solid rgb(201, 196, 196);
+
+    .show-img {
+        width: 25%;
+        padding: 4px;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .show-title {
+            width: 75%;
+            padding: 4px;
+
+            
+        }
+    }
+}

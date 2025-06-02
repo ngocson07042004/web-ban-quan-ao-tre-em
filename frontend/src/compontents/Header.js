@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDataGlobal } from '../hooks'
+import { Layout, Column } from '../LayoutContainer'
+import { ModalUser } from './Modal'
 import './scss/Header.scss'
+import axios from 'axios'
 
 const Menubar = [
   {id: 1, name: "Trang chủ" , link: "/"},
@@ -13,90 +16,12 @@ const Menubar = [
   {id: 6, name: "Liên hệ" , link: "/contact"},
 ]
 
-const ModalUser = () => {
-  const loginNav = useNavigate()
-  const registerNav = useNavigate()
-  const { checkLogin } = useDataGlobal()
-  // const handleLogout = () => {
-  //   const res =
-  // }
-
-  return(
-    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">Tài khoản</h1>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div className="modal-body">
-              <div className="modal-user w-100 d-flex flex-column">
-                <img 
-                  src={`${process.env.REACT_APP_URL_BACKEND}/users/1744741307078.5808.jpg`} 
-                  className="img-fluid rounded-circle border mx-auto" 
-                  alt="Logo"
-                  style={{ width: "70px", height: "70px" }}
-                />
-
-                <p className="text-center">
-                  {checkLogin.status ?
-                    <span>{checkLogin.auth}</span>
-                  : <>
-                    <button 
-                      type="button" 
-                      className="btn text-primary-emphasis" 
-                      data-bs-dismiss="modal" 
-                      onClick={() => loginNav("/auth/login")}
-                    >Đăng nhập</button>
-                    <span> | </span>
-                    <button 
-                      type="button" 
-                      className="btn text-primary-emphasis" 
-                      data-bs-dismiss="modal" 
-                      onClick={() => registerNav("/auth/register")}
-                    >Đăng ký</button>
-                  </>}
-                </p>
-              </div>
-
-              <div className="modal-list mt-2">
-                <ul style={{ margin: "0 10px", padding: "10px" }}>
-                  <li className="nav-item mt-1">
-                    <button type="button" className="btn">
-                      <i className="fa-solid fa-user-tie fs-6"></i>
-                      <span>  Tài khoản của tôi </span>
-                      </button>
-                  </li>
-
-                  <li className="nav-item mt-1">
-                    <button type="button" className="btn">
-                      <i className="fa-solid fa-clock-rotate-left fs-6"></i>
-                      <span>  Lịch sử mua hàng  </span>
-                    </button>
-                  </li>
-                  
-                  <li className="nav-item mt-1" style={{ display: checkLogin.status ? "block" : "none" }}>
-                    <button type="button" className="btn" onClick={() => window.location.href = "/"}>
-                      <i className="fa-solid fa-right-from-bracket fs-6"></i>
-                      <span>  Đăng xuất </span> 
-                    </button>
-                  </li>
-                </ul>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function Header() {
   const { carts, setIsShowCart } = useDataGlobal()
   const [isWidth, setIsWidth] = useState(1200)
-  const { checkLogin } = useDataGlobal()
-  const [keyword, setKeyword] = useState("")
-  const searchNavigate = useNavigate()
+  const [auth, setAuth] = useState({})
+  const navigate = useNavigate()
+  const { checkLogin, setQuery, query } = useDataGlobal()
   
   useEffect(() => {
     const handleResize = () => {
@@ -106,19 +31,48 @@ function Header() {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
   
-  const handleSearch = e => {
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_URL_BACKEND}/get/api/all-user`)
+    .then(res => setAuth(res.data?.find(item => item.username === checkLogin.auth) ?? {}))
+    .catch(err => console.log(err))
+  }, [checkLogin.auth])
+
+  const handleSearch = (e) => {
     e.preventDefault()
 
-    if (keyword.trim()) {
-      searchNavigate(`/search?search=${encodeURIComponent(keyword)}`)
+    if(query !== "") {
+      navigate(`/search?q=${encodeURIComponent(query)}`)
     }
   }
 
   return (
     <header className="header">
+      <div className="bg-body-secondary header-bg">
+        <Layout container={"container"} row={"row"}>
+          <Column lg={6} className={"text-start"}>
+            <p>Chào mừng bạn đến với T-Shop</p>
+          </Column>
+
+          <Column lg={6} className={"text-end header-auth"}>
+            {!checkLogin.status ? <>
+              <Link to="/auth/login">Đăng nhập</Link>
+              <span> | </span>
+              <Link to="/auth/register">Đăng ký</Link>
+            </> :
+            <>
+              <p data-bs-toggle="modal" data-bs-target="#exampleModalUser">
+                <img src={`${process.env.REACT_APP_URL_BACKEND}/users/${auth.avatar}`} alt="avatar" />
+                <span>  {auth.fullname} </span>
+              </p>
+            </>
+          }
+          </Column>
+        </Layout>
+      </div>
+      
       <nav className="navbar navbar-expand-lg bg-body-secondary">
         <div className={isWidth >= 1200 ? "container" : "container-fluid"}>
-          <img src="./images/logo-title.png" className="img-fluid" alt="logo"/>
+          <img src="../images/logo-title.png" className="img-fluid" alt="logo"/>
 
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -140,8 +94,7 @@ function Header() {
                     <input 
                       className="me-2 p-1" 
                       type="search"
-                      value={keyword}
-                      onChange={e => setKeyword(e.target.value)}
+                      onChange={e => setQuery(e.target.value)}
                       placeholder="Tìm kiếm sản phẩm..." 
                       aria-label="Search"
                     />
@@ -158,14 +111,14 @@ function Header() {
                       return
                     }
                     setIsShowCart(true)
-                  }}>
+                  }} style={{ border: "none", outline: "none" }}>
                     <i className="fa-solid fa-shopping-cart fs-5"></i>
                     <span className="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger">
                       {checkLogin.status ? carts.length : 0}
                     </span>
                   </button>
 
-                  <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button type="button" className="btn btn-user" data-bs-toggle="modal" data-bs-target="#exampleModalUser" style={{ border: "none", outline: "none" }}>
                     <i className="fa-solid fa-user fs-5"></i>
                   </button>
 
