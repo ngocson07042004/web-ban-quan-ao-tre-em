@@ -11,13 +11,15 @@ const routerC = require("./src/routers/ApiCheckProduct")
 // Config
 const app = express()
 const port = process.env.PORT
+const url_frontend = process.env.URL_FRONTEND
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: process.env.URL_FRONTEND,
-    methods: ["GET", "POST" ,"DELETE", "PUT"],
-    credentials: true
+    origin: url_frontend,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
 }))
 app.use("/users", express.static(path.join(__dirname, "users")))
 
