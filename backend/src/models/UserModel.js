@@ -36,18 +36,17 @@ const UserModel = {
     },
 
     register: async (getReq, callback) => {
-        const { username, password, email, role, fullname, phone, gender, address, hashCode } = getReq.body
+        const { username, password, email, role, fullname, phone, gender, address } = getReq.body
         const avatar = getReq.file ? getReq.file.filename : "1744741307078.5808.jpg"
         
         try {
             const hashPassword = await bcrypt.hash(password, 10)
-            const code = await bcrypt.hash(hashCode, 10)
 
             let sql = `INSERT INTO user_tb 
-                (username, email, password, role, fullname, avatar, gender, phone, address, hashCode) 
+                (username, email, password, role, fullname, avatar, gender, phone, address) 
                 VALUES (?)`
 
-            const values = [username, email, hashPassword, role, fullname, avatar, gender, phone, address, code]
+            const values = [username, email, hashPassword, role, fullname, avatar, gender, phone, address]
 
             db.query(sql, [values], (err, data) => callback(err, data))
         }

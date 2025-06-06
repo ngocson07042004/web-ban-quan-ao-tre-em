@@ -13,8 +13,7 @@ function Login() {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        role: "",
-        hashCode: ""
+        role: ""
     })
 
     const handleChange = (e) =>{
@@ -33,9 +32,6 @@ function Login() {
             }
             else if(res.data === "Password is not valid") {
                 toast.error("Mật khẩu không đúng!")
-            }
-            else if(res.data === "Code is not valid"){
-                toast.error("Mã code không đúng!")
             }
             else if(res.data === "Error") {
                 toast.error("Đăng nhập thất bại!")
@@ -56,7 +52,7 @@ function Login() {
         <>
             <header className="header-login" style={{ width: "100%", height: "10%" }}>
                 <Layout container={"container p-3"} row={"row"}>
-                    <Column lg={12} className={"d-flex p-1"}>
+                    <Column col={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={"d-flex p-1"}>
                         <img src="../images/logo-title.png" alt="logo" className="img-fluid" />
                         <h3 className="mt-3">Đăng nhập</h3>
                     </Column>
@@ -124,22 +120,6 @@ function Login() {
                                     <option value="Quản trị viên">Quản trị viên</option>
                                     <option value="Khách hàng">Khách hàng</option>
                                 </select>
-                            </div>
-
-                            <div className="input-group mt-3 hash-code">
-                                <span className="input-group-text" id="hashCode">
-                                    <i className="fa-solid fa-lock"></i>
-                                </span>
-
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Nhập mã code..."
-                                    id="hashCode"
-                                    name="hashCode"
-                                    onChange={handleChange}
-                                    required
-                                />
                             </div>
 
                             <div className="btn-group d-flex flex-column mt-4" role="group" aria-label="Basic example">

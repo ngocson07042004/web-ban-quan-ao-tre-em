@@ -18,8 +18,7 @@ function Register() {
         email: "",
         phone: "",
         address: "",
-        gender: "",
-        hashCode: ""
+        gender: ""
     })
 
     const handleChange = (e) =>{
@@ -236,21 +235,6 @@ function Register() {
                                     placeholder="Nhập địa chỉ..."
                                     id="address"
                                     name="address"
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="input-group mt-3 hash-code">
-                                <span className="input-group-text" id="hash-code">
-                                    <i className="fa-solid fa-lock"></i>
-                                </span>
-
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Nhập mã code..."
-                                    id="hash-code"
-                                    name="hashCode"
                                     onChange={handleChange}
                                 />
                             </div>

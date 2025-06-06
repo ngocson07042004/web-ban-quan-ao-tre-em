@@ -12,8 +12,7 @@ function ChangePassword() {
         username: "",
         password: "",
         confirmPassword: "",
-        role: "",
-        hashCode: "",
+        role: ""
     })
 
     const handleChange = (e) =>{
@@ -39,9 +38,6 @@ function ChangePassword() {
             }
             else if(res.data === "Error") {
                 toast.error("Đổi mật khẩu thất bại!")
-            }
-            else if(res.data === "Code is not valid") {
-                toast.error("Mã code không đúng!")
             }
             else {
                 toast.success("Đổi mật khẩu thành công")
@@ -135,21 +131,6 @@ function ChangePassword() {
                                     <option value="Quản trị viên">Quản trị viên</option>
                                     <option value="Khách hàng">Khách hàng</option>
                                 </select>
-                            </div>
-
-                            <div className="input-group mt-3 hash-code">
-                                <span className="input-group-text" id="hash-code">
-                                    <i className="fa-solid fa-lock"></i>
-                                </span>
-
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Nhập mã code..."
-                                    id="hash-code"
-                                    name="hashCode"
-                                    onChange={handleChange}
-                                />
                             </div>
 
                             <div className="btn-group d-flex flex-column mt-4" role="group" aria-label="Basic example">

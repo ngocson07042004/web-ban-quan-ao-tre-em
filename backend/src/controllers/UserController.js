@@ -64,7 +64,7 @@ const UserController = {
     },
 
     login: (req, res) => {
-        const { hashCode, password } = req.body
+        const { password } = req.body
 
         UserModel.login(req, async (err, data) => {
             if(err) {
@@ -77,18 +77,21 @@ const UserController = {
                 const user = await data[0]
                 
                 const isPassword  = await bcrypt.compare(password, user.password)
-                const isHashCode = await bcrypt.compare(hashCode, user.hashCode)
 
                 if (!isPassword ) return res.json("Password is not valid")
 
-                if(!isHashCode) return res.json("Code is not valid")
-
                 const payload = { username: user.username, email: user.email, phone: user.phone }
-                const code = createKey(hashCode)
+                const code = createKey(new Date().toISOString())
                 const token = signToken(payload, code, "5m")
-                res.cookie("token", token, { maxAge: 5 * 60 * 1000, httpOnly: true, domain: process.env.URL_FRONTEND })
-                res.cookie("secret", code, { maxAge: 5 * 60 * 1000, httpOnly: true, domain: process.env.URL_FRONTEND })
-                return res.json({ token, code, user, success: true })
+                res.cookie("token", token, { 
+                    maxAge: 5 * 60 * 1000, 
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "None",
+                    path: "/"
+
+                })
+                return res.json({ token, user, success: true })
             }
             catch(err) {
                 console.log(err)
@@ -97,8 +100,12 @@ const UserController = {
     },
     
     logout: (req, res) => {
-        res.clearCookie("token", { httpOnly: true })
-        res.clearCookie("secret", { httpOnly: true })
+        res.clearCookie("token", { 
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            path: "/"
+        })
         return res.json("Success")
     }
 }

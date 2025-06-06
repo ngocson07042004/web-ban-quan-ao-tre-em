@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import axios from 'axios'
 import { Column, Layout } from '../LayoutContainer'
 import { useDataGlobal } from '../hooks'
 import { formatPrice } from '../function'
-import './CheckOut.scss'
-import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import './scss/CheckOut.scss'
 
 function CheckOut() {
     document.title = "Thanh toán"
